@@ -304,13 +304,13 @@ class HamsterClient(object):
             for col in cols:
                 widths[col] = max(widths[col], len(fact[col]))
 
-        cols = ["{{{col}: <{len}}}".format(col=col, len=widths[col]) for col in cols]
-        fact_line = " | ".join(cols)
+        cols = [u"{{{col}: <{len}}}".format(col=col, len=widths[col]) for col in cols]
+        fact_line = u" | ".join(cols)
 
         row_width = sum([val + 3 for val in widths.values()])
 
         print
-        print fact_line.format(**headers)
+        print fact_line.format(**headers).encode("utf-8")
         print "-" * min(row_width, 80)
 
         by_cat = {}
@@ -320,7 +320,7 @@ class HamsterClient(object):
             by_cat[cat] += fact.delta
 
             pretty_fact = fact_dict(fact, print_with_date)
-            print fact_line.format(**pretty_fact)
+            print fact_line.format(**pretty_fact).encode("utf-8")
 
             if pretty_fact['description']:
                 for line in word_wrap(pretty_fact['description'], 76):
