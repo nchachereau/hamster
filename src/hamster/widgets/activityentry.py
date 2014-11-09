@@ -221,7 +221,7 @@ class ActivityEntry(gtk.Entry):
 
 
     def on_changed(self, entry):
-        text = self.get_text()
+        text = self.get_text().decode("utf-8")
 
         with self.complete_tree.handler_block(self.tree_checker):
             self.show_suggestions(text)
@@ -257,7 +257,7 @@ class ActivityEntry(gtk.Entry):
 
         elif event.keyval in (gdk.KEY_Up, gdk.KEY_Down):
             if not self.popup.get_visible():
-                self.show_suggestions(self.get_text())
+                self.show_suggestions(self.get_text().decode("utf-8"))
             self.complete_tree.on_key_press(self, event)
             return True
 
@@ -302,7 +302,7 @@ class ActivityEntry(gtk.Entry):
         self.suggestions = sorted(suggestions.iteritems(), key=lambda x: x[1], reverse=True)
 
     def complete_first(self):
-        text = self.get_text()
+        text = self.get_text().decode("utf-8")
         fact, search = Fact(text), extract_search(text)
         if not self.complete_tree.rows or not fact.activity:
             return text, None

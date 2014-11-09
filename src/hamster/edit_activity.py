@@ -118,7 +118,7 @@ class CustomFactController(gobject.GObject):
 
     def localized_fact(self):
         """makes sure fact is in our date"""
-        fact = Fact(self.activity.get_text())
+        fact = Fact(self.activity.get_text().decode("utf-8"))
         if fact.start_time:
             fact.start_time = dt.datetime.combine(self.date, fact.start_time.time())
 
